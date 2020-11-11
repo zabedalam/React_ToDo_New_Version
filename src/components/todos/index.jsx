@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ListView from '../listview'
+import TableView from "../tableview"
 
 export default class Todos extends Component {
     state={
@@ -26,6 +27,12 @@ toggleComplete=()=>{
             <>
              <h1 className="display-4 text-center mb-5">Todos</h1>   
              <ListView
+             todos={this.state.todos}
+             toggleComplete={this.toggleComplete}
+             toggleSelect={this.toggleSelect}
+             />
+
+             <TableView
              todos={this.state.todos}
              toggleComplete={this.toggleComplete}
              toggleSelect={this.toggleSelect}
