@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
+import shortid from "shortid"
+import {Modal,ModalBody,ModalHeader} from "reactstrap"
 import ListView from '../listview'
 import TableView from "../tableview"
+import CreateToDoForm from "../create-todo-form"
+import Controller from '../controller'
 
 export default class Todos extends Component {
     state={
@@ -12,14 +16,41 @@ description:"Simple todo make easy life",
 time:new Date(),
 isComplete:false,
 isSelect:false
-        }]
+        }],
+        isOpenTodoForm:false,
+        searchTerm:"",
+
     }
-toggleSelect=()=>{
+toggleSelect=(todoId)=>{
+const todos=[...this.state.todos]
+const todo=todos.find(t=>t.id===todoId)
+todo.isSelect=!todo.isSelect
+this.setState({todos})
 
 }
 
-toggleComplete=()=>{
+toggleComplete=(todoId)=>{
+    const todos=[...this.state.todos]
+    const todo=todos.find(t=>t.id===todoId)
+    todo.isComplete=!todo.isComplete
+    this.setState({todos})
+}
 
+toggleForm=()=>{
+    this.setState({
+        isOpenTodoForm:!this.state.isOpenTodoForm
+    })
+}
+
+createTodo=todo=>{
+    todo.id=shortid.generate()
+    todo.time=new Date()
+    todo.isComplete=false
+    todo.isSelect=false
+
+    const todos=[todo, ...this.state.todos]
+    this.setState({todos})
+    this.toggleForm()
 }
 
     render() {
@@ -37,6 +68,22 @@ toggleComplete=()=>{
              toggleComplete={this.toggleComplete}
              toggleSelect={this.toggleSelect}
              />
+
+             <Controller
+             term={this.state.searchTerm}
+             toggleForm={this.toggleForm}
+             handleSearch={this.handleSearch}/>
+             <Modal isOpen={this.state.isOpenTodoForm}
+             toggle={this.toggleForm}
+             >
+                 <ModalHeader toggle={this.toggleForm}>
+                     Create New ToDO Item
+                 </ModalHeader>
+                 <ModalBody>
+                     <CreateToDoForm createTodo={this.createTodo}/>
+                 </ModalBody>
+
+             </Modal>
             </>
         )
     }

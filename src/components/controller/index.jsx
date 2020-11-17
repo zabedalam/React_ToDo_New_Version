@@ -5,8 +5,10 @@ import SearchPanel from "./search-panel"
 Controller.propTypes={
     term:PropTypes.string.isRequired,
     handleSearch:PropTypes.func.isRequired,
-    toggleForm:propTypes.func.isRequired
+    toggleForm:PropTypes.func.isRequired
 }
+
+
 
 function Controller({term,handleSearch,toggleForm}) {
     return (
@@ -19,5 +21,7 @@ function Controller({term,handleSearch,toggleForm}) {
         </div>
     )
 }
+
+
 
 export default Controller
