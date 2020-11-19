@@ -1,27 +1,60 @@
-import React from 'react'
-import PropTypes from "prop-types"
-import SearchPanel from "./search-panel"
+import React from "react";
+import PropTypes from "prop-types";
+import { Row, Col } from "reactstrap";
+import SearchPanel from "./search-panel";
+import FilterController from "./filter-controller";
+import ViewController from "./view-controller";
+import BulkController from "./bulk-controller";
 
-Controller.propTypes={
-    term:PropTypes.string.isRequired,
-    handleSearch:PropTypes.func.isRequired,
-    toggleForm:PropTypes.func.isRequired
-}
+Controller.propTypes = {
+  term: PropTypes.string.isRequired,
+  view: PropTypes.string.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  toggleForm: PropTypes.func.isRequired,
+  handleFilter: PropTypes.func.isRequired,
+  changeView: PropTypes.func.isRequired,
+  clearSelected: PropTypes.func.isRequired,
+  clearCompleted: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+};
 
-
-
-function Controller({term,handleSearch,toggleForm}) {
-    return (
-        <div>
-            <SearchPanel
-            term={term}
-            handleSearch={handleSearch}
-            toggleForm={toggleForm}
+function Controller({
+  term,
+  handleSearch,
+  toggleForm,
+  handleFilter,
+  view,
+  changeView,
+  clearSelected,
+  clearCompleted,
+  reset,
+}) {
+  return (
+    <div>
+      <SearchPanel
+        term={term}
+        handleSearch={handleSearch}
+        toggleForm={toggleForm}
+      />
+      <Row className="my-4">
+        <Col md={{ size: 4 }}>
+          <FilterController handleFilter={handleFilter} />
+        </Col>
+        <Col md={{ size: 4 }}>
+          <ViewController view={view} changeView={changeView} />
+        </Col>
+        <Col md={{ size: 4 }} className="d-flex">
+          <div className="ml-auto">
+            <BulkController
+              clearSelected={clearSelected}
+              clearCompleted={clearCompleted}
+              reset={reset}
             />
-        </div>
-    )
+          </div>
+        </Col>
+      </Row>
+    </div>
+  );
 }
 
-
-
-export default Controller
+export default Controller;
