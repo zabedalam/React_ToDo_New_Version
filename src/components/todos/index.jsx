@@ -17,10 +17,19 @@ export default class Todos extends Component {
         isComplete: false,
         isSelect: false,
       },
+      {
+        id: "02",
+        text: "main todo text",
+        description: "Simple todo make easy life",
+        time: new Date(),
+        isComplete: false,
+        isSelect: false,
+      }
     ],
     isOpenTodoForm: false,
     searchTerm: "",
     view: "list",
+    filter: "all",
   };
   toggleSelect = (todoId) => {
     const todos = [...this.state.todos];
@@ -53,9 +62,53 @@ export default class Todos extends Component {
     this.toggleForm();
   };
 
+  handleSearch = (value) => {
+    this.setState({
+      searchTerm: value,
+    });
+  };
+
+  performSearch = () => {
+    return this.state.todos.filter((todo) =>
+      todo.text.toLowerCase().includes(this.state.searchTerm.toLowerCase())
+    );
+  };
+
   handleFilter = (filter) => {
     this.setState({
       filter,
+    });
+  };
+
+  performFilter = (todos) => {
+    const { filter } = this.state;
+    if (filter === "completed") {
+      return todos.filter((todo) => todo.isComplete);
+    } else if (filter === "running") {
+      return todos.filter((todo) => !todo.isComplete);
+    } else {
+      return todos;
+    }
+  };
+
+  clearSelected = () => {
+    const todos = this.state.todos.filter((todo) => !todo.isSelect);
+    this.setState({
+      todos,
+    });
+  };
+
+  clearCompleted = () => {
+    const todos = this.state.todos.filter((todo) => !todo.isComplete);
+    this.setState({ todos });
+  };
+
+  reset = () => {
+    this.setState({
+      filter: "all",
+      searchTerm: "",
+      view: "list",
+      isOpenTodoForm: false,
     });
   };
 
@@ -66,15 +119,19 @@ export default class Todos extends Component {
   };
 
   getView = () => {
+    let todos = this.performSearch();
+    todos = this.performFilter(todos);
     return this.state.view === "list" ? (
       <ListView
-        todos={this.state.todos}
+        // todos={this.state.todos}
+        todos={todos}
         toggleComplete={this.toggleComplete}
         toggleSelect={this.toggleSelect}
       />
     ) : (
       <TableView
-        todos={this.state.todos}
+        // todos={this.state.todos}
+        todos={todos}
         toggleComplete={this.toggleComplete}
         toggleSelect={this.toggleSelect}
       />
