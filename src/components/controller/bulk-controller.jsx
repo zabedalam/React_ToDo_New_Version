@@ -15,6 +15,7 @@ function BulkController({ clearCompleted, clearSelected, reset }) {
         <Button color="danger" onClick={clearSelected}>
           Clear Selected
         </Button>
+
         <Button color="danger" onClick={clearCompleted}>
           Clear Completed
         </Button>

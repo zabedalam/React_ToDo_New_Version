@@ -4,14 +4,39 @@ import PropTypes from "prop-types";
 
 FilterController.propTypes = {
   handleFilter: PropTypes.func.isRequired,
+  filterValue: PropTypes.string.isRequired,
 };
-function FilterController({ handleFilter }) {
+function FilterController({ handleFilter, filterValue }) {
   return (
     <>
       <ButtonGroup>
-        <Button onClick={() => handleFilter("all")}>All</Button>
-        <Button onClick={() => handleFilter("running")}>Running</Button>
-        <Button onClick={() => handleFilter("completed")}>Completed</Button>
+        {filterValue === "all" ? (
+          <Button color="success" onClick={() => handleFilter("all")}>
+            All
+          </Button>
+        ) : (
+          <Button color="danger" onClick={() => handleFilter("all")}>
+            All
+          </Button>
+        )}
+        {filterValue === "running" ? (
+          <Button color="success" onClick={() => handleFilter("running")}>
+            Running
+          </Button>
+        ) : (
+          <Button color="danger" onClick={() => handleFilter("running")}>
+            Running
+          </Button>
+        )}
+        {filterValue === "completed" ? (
+          <Button color="success" onClick={() => handleFilter("completed")}>
+            Completed
+          </Button>
+        ) : (
+          <Button color="danger" onClick={() => handleFilter("completed")}>
+            Completed
+          </Button>
+        )}
       </ButtonGroup>
     </>
   );

@@ -16,6 +16,7 @@ Controller.propTypes = {
   clearSelected: PropTypes.func.isRequired,
   clearCompleted: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  filterValue: PropTypes.string.isRequired,
 };
 
 function Controller({
@@ -28,6 +29,7 @@ function Controller({
   clearSelected,
   clearCompleted,
   reset,
+  filterValue,
 }) {
   return (
     <div>
@@ -38,7 +40,10 @@ function Controller({
       />
       <Row className="my-4">
         <Col md={{ size: 4 }}>
-          <FilterController handleFilter={handleFilter} />
+          <FilterController
+            handleFilter={handleFilter}
+            filterValue={filterValue}
+          />
         </Col>
         <Col md={{ size: 4 }}>
           <ViewController view={view} changeView={changeView} />

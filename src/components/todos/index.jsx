@@ -30,6 +30,7 @@ export default class Todos extends Component {
     searchTerm: "",
     view: "list",
     filter: "all",
+    
   };
   toggleSelect = (todoId) => {
     const todos = [...this.state.todos];
@@ -164,6 +165,12 @@ export default class Todos extends Component {
           clearSelected={this.clearSelected}
           clearCompleted={this.clearCompleted}
           reset={this.reset}
+          filterValue={this.state.filter}
+          // todos={this.state.todos.isSelect}
+          // select={this.state.todos.isSelect}
+          // complete={this.state.todos.isComplete}
+          
+
         />
         <div>{this.getView()}</div>
         <Modal isOpen={this.state.isOpenTodoForm} toggle={this.toggleForm}>
